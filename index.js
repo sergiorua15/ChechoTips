@@ -1,4 +1,4 @@
-// Checho Tips - simple client-side rendering, search and theme toggle
+// Checho Tips - renderizado simple del lado del cliente, búsqueda y cambio de tema
 
 const sampleArticles = [
   { 
@@ -45,6 +45,24 @@ const sampleArticles = [
     date: '2025-07-15',
     image: 'img/mobile.jpg',
     color: '#fbbf24'
+  },
+  {
+    id: 6,
+    kicker: 'IA',
+    title: 'DALL-E 3: La nueva generación de arte IA',
+    excerpt: 'Exploramos las capacidades mejoradas y el impacto en el arte digital.',
+    date: '2025-10-20',
+    image: 'img/Dall_e.jpg',
+    color: '#4ade80'
+  },
+  {
+    id: 7,
+    kicker: 'Desarrollo',
+    title: 'Bun vs. Node.js: ¿El fin de una era?',
+    excerpt: 'Analizamos el nuevo runtime de JavaScript y su impacto en el ecosistema Node.js.',
+    date: '2025-10-25',
+    image: 'img/placeholder.jpg',
+    color: '#f59e0b'
   }
 ];const $ = selector => document.querySelector(selector);
 
@@ -61,31 +79,58 @@ function renderArticles(items) {
     card.className = 'card';
     card.style.transform = 'translateY(20px)';
     card.style.opacity = '0';
-    card.innerHTML = `
-      <div class="card-img-container">
-        <img class="card-img" 
-          src="${a.image}" 
-          alt="${escapeHtml(a.title)}" 
-          loading="lazy"
-          onerror="this.src='img/placeholder.jpg'; this.onerror=null;">
-      </div>
-      <div class="card-content">
-        <div class="kicker" style="color:${a.color}">${escapeHtml(a.kicker)}</div>
-        <div class="title">${escapeHtml(a.title)}</div>
-        <div class="excerpt">${escapeHtml(a.excerpt)}</div>
-        <div class="meta">${a.date}</div>
-      </div>
-    `;
+
+    const imgContainer = document.createElement('div');
+    imgContainer.className = 'card-img-container';
+
+    const img = document.createElement('img');
+    img.className = 'card-img';
+    img.src = a.image;
+    img.alt = a.title;
+    img.loading = 'lazy';
+    img.onerror = () => {
+      img.src = 'img/placeholder.jpg';
+      img.onerror = null;
+    };
+
+    imgContainer.appendChild(img);
+
+    const cardContent = document.createElement('div');
+    cardContent.className = 'card-content';
+
+    const kicker = document.createElement('div');
+    kicker.className = 'kicker';
+    kicker.style.color = a.color;
+    kicker.textContent = a.kicker;
+
+    const title = document.createElement('div');
+    title.className = 'title';
+    title.textContent = a.title;
+
+    const excerpt = document.createElement('div');
+    excerpt.className = 'excerpt';
+    excerpt.textContent = a.excerpt;
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    meta.textContent = a.date;
+
+    cardContent.appendChild(kicker);
+    cardContent.appendChild(title);
+    cardContent.appendChild(excerpt);
+    cardContent.appendChild(meta);
+
+    card.appendChild(imgContainer);
+    card.appendChild(cardContent);
+
     grid.appendChild(card);
-    // Animate entrance
+    // Animar la entrada
     requestAnimationFrame(() => {
       card.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
       card.style.transform = 'translateY(0)';
       card.style.opacity = '1';
     });
   });
-}function escapeHtml(s){
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function initSearch() {

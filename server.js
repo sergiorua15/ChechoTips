@@ -2,10 +2,17 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+const publicDir = path.join(__dirname);
+
 const server = http.createServer((req, res) => {
-    let filePath = '.' + req.url;
-    if (filePath === './') {
-        filePath = './index.html';
+    let requestedFile = req.url === '/' ? '/index.html' : req.url;
+    const filePath = path.join(publicDir, requestedFile);
+
+    // Validar que la ruta solicitada esté dentro del directorio público
+    if (!filePath.startsWith(publicDir)) {
+        res.writeHead(403);
+        res.end('Acceso prohibido');
+        return;
     }
 
     const extname = path.extname(filePath);
@@ -31,10 +38,10 @@ const server = http.createServer((req, res) => {
         if (error) {
             if(error.code === 'ENOENT') {
                 res.writeHead(404);
-                res.end('File not found');
+                res.end('Archivo no encontrado');
             } else {
                 res.writeHead(500);
-                res.end('Server error: ' + error.code);
+                res.end('Error del servidor: ' + error.code);
             }
         } else {
             res.writeHead(200, { 'Content-Type': contentType });
@@ -43,6 +50,6 @@ const server = http.createServer((req, res) => {
     });
 });
 
-server.listen(8080, 'localhost', () => {
-    console.log('Server running at http://localhost:8080/');
+server.listen(8081, 'localhost', () => {
+    console.log('Servidor corriendo en http://localhost:8081/');
 });

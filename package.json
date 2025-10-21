@@ -1,0 +1,27 @@
+{
+  "name": "chechotips",
+  "version": "1.0.0",
+  "description": "Pequeña página estática de noticias y novedades de tecnología. Diseño minimalista, responsive y con toggle de tema (claro/oscuro). Está pensada para abrirse como sitio estático localmente.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiorua15/ChechoTips.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergiorua15/ChechoTips/issues"
+  },
+  "homepage": "https://github.com/sergiorua15/ChechoTips#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "mime-types": "^3.0.1",
+    "serve-static": "^2.2.0"
+  }
+}
