@@ -115,10 +115,16 @@ function renderArticles(items) {
     meta.className = 'meta';
     meta.textContent = a.date;
 
+    const readMore = document.createElement('a');
+    readMore.className = 'read-more';
+    readMore.textContent = 'Leer más →';
+    readMore.href = '#';
+
     cardContent.appendChild(kicker);
     cardContent.appendChild(title);
     cardContent.appendChild(excerpt);
     cardContent.appendChild(meta);
+    cardContent.appendChild(readMore);
 
     card.appendChild(imgContainer);
     card.appendChild(cardContent);
